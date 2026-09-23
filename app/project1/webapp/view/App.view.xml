@@ -1,0 +1,18 @@
+<mvc:View
+    controllerName="po.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <App id="app">
+
+        <pages>
+
+            <mvc:XMLView
+                id="poCreateView"
+                viewName="po.view.POCreate"/>
+
+        </pages>
+
+    </App>
+
+</mvc:View>

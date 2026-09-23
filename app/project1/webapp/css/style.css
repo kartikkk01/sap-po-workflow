@@ -1,0 +1,116 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+}
+
+.poPage {
+    background: #f5f6f7;
+}
+
+.pageContent {
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.sectionPanel {
+    margin-bottom: 1rem;
+    background: white;
+}
+
+.customerGrid {
+    margin-bottom: 1rem;
+}
+
+.customerPanel {
+    min-height: 135px;
+    height: 135px;
+    background: white;
+}
+
+.supplierPanel {
+    height: 165px;
+}
+
+.customerBox {
+    padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+    box-sizing: border-box;
+}
+
+.customerLabel {
+    margin-top: 0.25rem;
+    margin-bottom: 0.35rem;
+}
+
+.customerInput {
+    width: 100%;
+}
+
+.supplierAddressLabel {
+    margin-top: 0.65rem;
+}
+
+.supplierAddress {
+    width: 100%;
+}
+
+.poHeaderColumn {
+    padding: 0.25rem 2rem 0.5rem 2rem;
+    box-sizing: border-box;
+}
+
+.fieldLabel {
+    margin-top: 0.4rem;
+    margin-bottom: 0.2rem;
+}
+
+.fieldInput {
+    width: 100%;
+}
+
+.deliveryColumn {
+    padding-top: 0.25rem;
+}
+
+.deliveryLabel {
+    margin-top: 0.4rem;
+}
+
+.itemsPanel {
+    margin-top: 0.25rem;
+}
+
+.itemsPanel .sapMListTbl {
+    width: 100%;
+}
+
+.itemsPanel .sapMInputBase {
+    width: 100%;
+}
+
+.totalBox {
+    padding: 0.75rem 1rem 0.5rem 1rem;
+    box-sizing: border-box;
+}
+
+.totalLabel {
+    margin-right: 0.5rem;
+    font-weight: 600;
+    line-height: 2rem;
+}
+
+.totalNumber {
+    font-weight: 700;
+}
+
+.instructionsPanel {
+    margin-bottom: 1rem;
+}
+
+.sapMPanelHdr {
+    font-weight: 600;
+}/* Enter your custom styles here */

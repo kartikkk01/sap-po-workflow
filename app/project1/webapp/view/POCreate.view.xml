@@ -1,0 +1,617 @@
+<mvc:View
+    controllerName="po.controller.POCreate"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+
+    <Page
+        id="poCreatePage"
+        title="Customer PO Creation"
+        class="poPage">
+
+        <content>
+
+            <VBox
+                width="100%"
+                class="pageContent">
+
+                <Panel
+                    headerText="Purchase Order Information"
+                    class="sectionPanel">
+
+                    <l:Grid
+                        width="100%"
+                        defaultSpan="XL6 L6 M12 S12"
+                        hSpacing="1"
+                        vSpacing="0">
+
+                        <VBox
+                            class="poHeaderColumn">
+
+                            <Label
+                                text="Request ID:"
+                                class="fieldLabel"/>
+
+                            <Input
+                                value="{po>/RequestID}"
+                                editable="false"
+                                width="100%"
+                                class="fieldInput"/>
+
+                            <Label
+                                text="PO Number:"
+                                required="true"/>
+
+                            <Select
+                                id="poNumberSelect"
+                                width="100%"
+                                selectedKey="{po>/poNumber}"
+                                change=".onPOChange"
+                                forceSelection="true"
+                                items="{
+                                    path: 'poList>/PurchaseOrders'
+                                }">
+
+                                <core:Item
+                                    key="{poList>poNumber}"
+                                    text="{poList>poNumber}"/>
+
+                            </Select>
+
+                            <Label
+                                text="PO Date:"
+                                required="true"
+                                class="fieldLabel"/>
+
+                            <DatePicker
+                                value="{po>/poDate}"
+                                valueFormat="yyyy-MM-dd"
+                                displayFormat="dd-MMM-yyyy"
+                                width="100%"
+                                class="fieldInput"/>
+
+                            <Label
+                                text="Currency:"
+                                class="fieldLabel"/>
+
+                            <Input
+                                value="{po>/currency}"
+                                editable="false"
+                                width="100%"
+                                class="fieldInput"/>
+
+                            <Label
+                                text="MHA:"
+                                class="fieldLabel"/>
+
+                            <Input
+                                value="{po>/mha}"
+                                placeholder="Select MHA"
+                                width="100%"
+                                showValueHelp="true"
+                                class="fieldInput"/>
+
+                        </VBox>
+
+                        <VBox
+                            class="poHeaderColumn deliveryColumn">
+
+                            <Label
+                                text="Delivery Date:"
+                                class="fieldLabel deliveryLabel"/>
+
+                            <DatePicker
+                                value="{po>/deliveryDate}"
+                                valueFormat="yyyy-MM-dd"
+                                displayFormat="dd-MMM-yyyy"
+                                placeholder="e.g. 31-Dec-2026"
+                                width="100%"
+                                class="fieldInput"/>
+
+                        </VBox>
+
+                    </l:Grid>
+
+                </Panel>
+
+                <l:Grid
+                    width="100%"
+                    defaultSpan="XL4 L4 M12 S12"
+                    hSpacing="1"
+                    vSpacing="1"
+                    class="customerGrid">
+
+                    <Panel
+                        headerText="Bill To Customer"
+                        class="customerPanel">
+
+                        <VBox
+                            width="100%"
+                            class="customerBox">
+
+                            <Label
+                                text="Customer:"
+                                required="true"
+                                class="customerLabel"/>
+
+                            <Input
+                                value="{po>/billToCustomer}"
+                                placeholder="Select Customer..."
+                                showValueHelp="true"
+                                width="100%"
+                                class="customerInput"/>
+
+                        </VBox>
+
+                    </Panel>
+
+                    <Panel
+                        headerText="Ship To Customer"
+                        class="customerPanel">
+
+                        <VBox
+                            width="100%"
+                            class="customerBox">
+
+                            <Label
+                                text="Customer:"
+                                required="true"
+                                class="customerLabel"/>
+
+                            <Input
+                                value="{po>/shipToCustomer}"
+                                placeholder="Select Customer..."
+                                showValueHelp="true"
+                                width="100%"
+                                class="customerInput"/>
+
+                        </VBox>
+
+                    </Panel>
+
+                    <Panel
+                        headerText="Supplier"
+                        class="customerPanel supplierPanel">
+
+                        <VBox
+                            width="100%"
+                            class="customerBox">
+
+                            <Label
+                                text="Supplier:"
+                                required="true"
+                                class="customerLabel"/>
+
+                            <Input
+                                value="{po>/supplier}"
+                                placeholder="Enter Supplier..."
+                                showValueHelp="true"
+                                width="100%"
+                                class="customerInput"/>
+
+                            <Label
+                                text="Address:"
+                                class="customerLabel supplierAddressLabel"/>
+
+                            <TextArea
+                                value="{po>/supplierAddress}"
+                                placeholder="Enter Supplier Address..."
+                                rows="2"
+                                width="100%"
+                                class="supplierAddress"/>
+
+                        </VBox>
+
+                    </Panel>
+
+                </l:Grid>
+
+                <Panel
+                    headerText="Order Line Items"
+                    class="sectionPanel itemsPanel">
+
+                    <VBox
+                        width="100%">
+
+                        <OverflowToolbar>
+
+                            <Title
+                                text="Purchase Order Items"
+                                level="H4"/>
+
+                            <ToolbarSpacer/>
+
+                           
+                             <Button
+                                text="Import Pending POs"
+                                icon="sap-icon://download"
+                                type="Emphasized"
+                                press=".onImportPendingPOs"/>
+
+                            <Button
+                                text="Add Item"
+                                icon="sap-icon://add"
+                                type="Emphasized"
+                                press=".onAddItem"/>
+
+                                <Button
+                                text="Add column"
+                                icon="sap-icon://add"
+                                type="Emphasized"
+                                press=".onAddColumn"/>
+
+                            <Button
+                                text="Delete"
+                                icon="sap-icon://delete"
+                                type="Transparent"
+                                press=".onDeleteItem"/>
+
+                            
+
+                        </OverflowToolbar>
+
+                        <Table
+                            id="itemsTable"
+                            width="100%"
+                            inset="false"
+                            mode="MultiSelect"
+                            growing="false"
+                            items="{po>/items}">
+
+                            <columns>
+
+                                <Column width="6rem">
+                                    <Text text="Sub Request ID"/>
+                                </Column>
+
+                                <Column width="10rem">
+                                    <Text text="Material Code"/>
+                                </Column>
+
+                                <Column width="14rem">
+                                    <Text text="Material Description"/>
+                                </Column>
+
+                                <Column width="9rem">
+                                    <Text text="Plant"/>
+                                </Column>
+
+                                <Column width="7rem">
+                                    <Text text="Unit"/>
+                                </Column>
+
+                                <Column
+                                    width="9rem"
+                                    hAlign="End">
+                                    <Text text="Quantity"/>
+                                </Column>
+
+                                <Column
+                                    width="9rem"
+                                    hAlign="End">
+                                    <Text text="Rate"/>
+                                </Column>
+
+                                <Column
+                                    width="9rem"
+                                    hAlign="End">
+                                    <Text text="Discount %"/>
+                                </Column>
+
+                                <Column
+                                    width="9rem"
+                                    hAlign="End">
+                                    <Text text="Amount"/>
+                                </Column>
+
+                                <Column
+                                    width="5rem"
+                                    hAlign="Center">
+                                    <Text text="Actions"/>
+                                </Column>
+
+                            </columns>
+
+                            <items>
+
+                                <ColumnListItem>
+
+                                    <cells>
+
+                                        <Text
+                                            text="{po>subRequestID}"/>
+
+                                        <Input
+                                            value="{po>materialcode}"
+                                            placeholder="Material Code"
+                                            width="100%"/>
+
+                                        <Input
+                                            value="{po>materialdescription}"
+                                            placeholder="Material Description"
+                                            width="100%"/>
+
+                                        <Input
+                                            value="{po>plant}"
+                                            placeholder="Plant"
+                                            width="100%"/>
+
+                                        <Input
+                                            value="{po>unit}"
+                                            placeholder="Unit"
+                                            width="100%"/>
+
+                                        <Input
+                                            value="{po>quantity}"
+                                            type="Number"
+                                            width="100%"
+                                            textAlign="End"
+                                            change=".onItemValueChange"/>
+
+                                        <Input
+                                            value="{po>unitPrice}"
+                                            type="Number"
+                                            width="100%"
+                                            textAlign="End"
+                                            change=".onItemValueChange"/>
+
+                                        <Input
+                                            value="{po>discountPercent}"
+                                            type="Number"
+                                            width="100%"
+                                            textAlign="End"
+                                            change=".onItemValueChange"/>
+
+                                        <ObjectNumber
+                                            number="{po>totalPrice}"
+                                            unit="{po>/currency}"
+                                            emphasized="false"/>
+
+                                        <Button
+                                            icon="sap-icon://delete"
+                                            type="Transparent"
+                                            tooltip="Delete Item"
+                                            press=".onDeleteSingleItem"/>
+
+                                    </cells>
+
+                                </ColumnListItem>
+
+                            </items>
+
+                        </Table>
+
+                        <HBox
+                            width="100%"
+                            justifyContent="End"
+                            class="totalBox">
+
+                            <Text
+                                text="Total Amount:"
+                                class="totalLabel"/>
+
+                            <ObjectNumber
+                                number="{po>/totalAmount}"
+                                unit="{po>/currency}"
+                                emphasized="true"
+                                class="totalNumber"/>
+
+                        </HBox>
+
+                    </VBox>
+
+                </Panel>
+
+                <Panel
+                    headerText="Special Instructions"
+                    class="sectionPanel instructionsPanel">
+
+                    <TextArea
+                        value="{po>/specialInstructions}"
+                        placeholder="Enter special instructions..."
+                        rows="4"
+                        width="100%"/>
+
+                </Panel>
+
+            </VBox>
+
+        </content>
+
+        <footer>
+
+            <OverflowToolbar>
+
+                <ToolbarSpacer/>
+
+                <Button
+                    text="Cancel"
+                    type="Transparent"
+                    press=".onCancel"/>
+
+                <Button
+                    text="Save Draft"
+                    icon="sap-icon://save"
+                    type="Transparent"
+                    press=".onSaveDraft"/>
+
+                <Button
+                    text="Submit for Approval"
+                    icon="sap-icon://approvals"
+                    type="Emphasized"
+                    press=".onSubmitApproval"/>
+
+                 <Button
+                                text="PO Status"
+                                type="Emphasized"
+                                icon="sap-icon://activity-items"
+                                press=".onPOStatus"
+                                class="sapUiTinyMarginEnd" /> 
+
+                                <Button
+                                 text="PO Summary"
+                                 type="Emphasized"
+                                 icon="sap-icon://list"
+                                 press=".onPOSummary"
+                                 class="sapUiTinyMarginEnd"/>   
+
+            </OverflowToolbar>
+
+        </footer>
+
+
+        <dependents>
+
+    <!-- PO SUMMARY DIALOG -->
+
+    <Dialog
+        id="poSummaryDialog"
+        title="PO Summary"
+        contentWidth="900px"
+        contentHeight="600px"
+        draggable="true"
+        resizable="true"
+        stretchOnPhone="true">
+
+        <content>
+
+            <VBox
+                class="sapUiSmallMargin">
+
+                <!-- FILTER -->
+
+                <HBox
+                    justifyContent="SpaceBetween"
+                    alignItems="Center"
+                    class="sapUiSmallMarginBottom">
+
+                    <Title
+                        text="All Purchase Orders"
+                        level="H3"/>
+
+                    <Select
+                        id="poSummaryStatusFilter"
+                        width="200px"
+                        selectedKey="ALL"
+                        change=".onPOSummaryFilter">
+
+                        <core:Item
+                            key="ALL"
+                            text="All Status"/>
+                        <core:Item
+                            key="PENDING"
+                            text="Pending Approval"/>
+                        <core:Item
+                            key="REJECTED"
+                            text="Rejected"/>
+                        <core:Item
+                            key="APPROVED"
+                            text="Approved"/>
+                        </Select>
+
+          
+
+                </HBox>
+
+
+                <!-- PO TABLE -->
+
+                <Table
+                    id="poSummaryTable"
+                    items="{poSummary>/PurchaseOrders}"
+                    growing="true"
+                    growingThreshold="20"
+                    growingScrollToLoad="true">
+
+                    <columns>
+
+                        <Column>
+                            <Text text="PO ID"/>
+                        </Column>
+
+                        <Column>
+                            <Text text="RFQ ID"/>
+                        </Column>
+
+                        <Column hAlign="End">
+                            <Text text="Amount"/>
+                        </Column>
+
+                        <Column>
+                            <Text text="Supplier"/>
+                        </Column>
+
+                        <Column>
+                            <Text text="Status"/>
+                        </Column>
+                       <Column>
+                <Text text="Approval Stage"/>
+            </Column> 
+
+                    </columns>
+
+                    <items>
+
+                        <ColumnListItem>
+
+                            <cells>
+
+                                <ObjectIdentifier
+                                    title="{poSummary>poNumber}"/>
+
+                                <Text
+                                    text="{poSummary>RequestID}"/>
+
+                                <ObjectNumber
+                                    number="{poSummary>totalAmount}"
+                                    unit="{poSummary>currency}"/>
+
+                                <Text
+                                    text="{poSummary>supplier}"/>
+
+                                <ObjectStatus
+                                    text="{poSummary>status}"
+                                    state="{
+                                        path: 'poSummary>status',
+                                        formatter: '.getSummaryStatusState'
+                                    }"/>
+
+
+
+                    <!-- APPROVAL STAGE -->
+                    <ObjectStatus
+                        text="{poSummary>approvalStage}"
+                        state="{
+                            path: 'poSummary>approvalStage',
+                            formatter: '.getApprovalStageState'
+                        }"/>
+
+                            </cells>
+
+                        </ColumnListItem>
+
+                    </items>
+
+                </Table>
+
+            </VBox>
+
+        </content>
+
+        <beginButton>
+
+            <Button
+                text="Close"
+                type="Emphasized"
+                press=".onClosePOSummary"/>
+
+        </beginButton>
+
+    </Dialog>
+
+</dependents>
+
+    </Page>
+
+</mvc:View>

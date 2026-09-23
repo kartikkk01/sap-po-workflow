@@ -1,0 +1,11 @@
+ID,parent_ID,subRequestID,materialcode,materialdescription,plant,unit,quantity,unitPrice,discountPercent,totalPrice
+aaaaaaa1-aaaa-aaaa-aaaa-aaaaaaaaaaa1,11111111-1111-1111-1111-111111111111,1,MAT-1001,Industrial Motor,Delhi,PCS,5,2000,5,9500
+aaaaaaa2-aaaa-aaaa-aaaa-aaaaaaaaaaa2,11111111-1111-1111-1111-111111111111,2,MAT-1002,Control Panel,Delhi,PCS,2,2500,0,5000
+aaaaaaa3-aaaa-aaaa-aaaa-aaaaaaaaaaa3,11111111-1111-1111-1111-111111111111,3,MAT-1003,Electrical Cable,Delhi,MTR,100,10,2.5,975
+
+bbbbbbb1-bbbb-bbbb-bbbb-bbbbbbbbbbb1,22222222-2222-2222-2222-222222222222,1,MAT-2001,Electric Motor,Noida,PCS,10,1500,5,14250
+bbbbbbb2-bbbb-bbbb-bbbb-bbbbbbbbbbb2,22222222-2222-2222-2222-222222222222,2,MAT-2002,Power Cable,Noida,MTR,50,100,10,4500
+
+ccccccc1-cccc-cccc-cccc-ccccccccccc1,33333333-3333-3333-3333-333333333333,1,MAT-3001,Siemens Contactor,Gurgaon,PCS,10,1200,5,11400
+ccccccc2-cccc-cccc-cccc-ccccccccccc2,33333333-3333-3333-3333-333333333333,2,MAT-3002,Siemens Relay,Gurgaon,PCS,10,800,5,7600
+ccccccc3-cccc-cccc-cccc-ccccccccccc3,33333333-3333-3333-3333-333333333333,3,MAT-3003,Siemens Switch,Gurgaon,PCS,10,800,5,7600
